@@ -1,5 +1,6 @@
 package com.example.recipeapp.ui.components
 
+<<<<<<< HEAD
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -38,3 +39,5 @@ fun BottomBar(navController: NavController) {
         )
     }
 }
+=======
+>>>>>>> e00500d5978e9619235c729a911287c543a149a6

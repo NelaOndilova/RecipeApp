@@ -1,5 +1,6 @@
 package com.example.recipeapp.navigation
 
+<<<<<<< HEAD
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -34,3 +35,5 @@ fun NavGraph() {
         }
     }
 }
+=======
+>>>>>>> e00500d5978e9619235c729a911287c543a149a6
