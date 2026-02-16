@@ -57,8 +57,5 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-<<<<<<< HEAD
     implementation(libs.navigation.compose)
-=======
->>>>>>> e00500d5978e9619235c729a911287c543a149a6
 }
