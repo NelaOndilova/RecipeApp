@@ -1,6 +1,5 @@
 package com.example.recipeapp.ui.screens
 
-<<<<<<< HEAD
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -17,5 +16,3 @@ fun AccountScreen() {
         Text("Account Screen")
     }
 }
-=======
->>>>>>> e00500d5978e9619235c729a911287c543a149a6
