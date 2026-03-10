@@ -27,10 +27,11 @@ fun NavGraph() {
             startDestination = "home",
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable("home") { HomeScreen() }
+            composable("home") { HomeScreen(navController) }
             composable("favorites") { FavoritesScreen() }
             composable("addRecipe") { AddRecipeScreen() }
             composable("account") { AccountScreen() }
+            composable("favorites") { FavoritesScreen() }
         }
     }
 }
