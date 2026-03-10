@@ -44,8 +44,8 @@ fun BottomBar(navController: NavController) {
 
         NavigationBarItem(
             selected = false,
-            onClick = { navController.navigate("profile") },
-            label = { Text("Profile", color = Color(0xFF822D3A)) },
+            onClick = { navController.navigate("account") },
+            label = { Text("Account", color = Color(0xFF822D3A)) },
             icon = {
                 Icon(Icons.Filled.Person, contentDescription = "Profile", tint = Color(0xFFF08495))
             }
