@@ -95,16 +95,19 @@ fun HomeScreen(navController: NavController) {
                     FavoriteRecipe(
                         image = R.drawable.burger,
                         name = "Homemade burger",
+                        navController = navController
                     )
 
                     FavoriteRecipe(
                         image = R.drawable.ceasersalad,
-                        name = "Caesar salad"
+                        name = "Caesar salad" ,
+                        navController = navController
                     )
 
                     FavoriteRecipe(
                         image = R.drawable.koreanfriedchicken,
-                        name = "Korean fried chicken"
+                        name = "Korean fried chicken",
+                        navController = navController
                     )
 
                 }
@@ -117,7 +120,7 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun FavoriteRecipe(image: Int, name: String) {
+fun FavoriteRecipe(image: Int, name: String,navController: NavController) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -141,7 +144,10 @@ fun FavoriteRecipe(image: Int, name: String) {
             fontSize = 12.sp,
             color = Color(0xFFF08495),
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier.clickable {
+                navController.navigate("recipe/$name")
+            }
         )
 
     }

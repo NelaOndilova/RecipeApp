@@ -10,6 +10,7 @@ import com.example.recipeapp.ui.screens.AccountScreen
 import com.example.recipeapp.ui.screens.AddRecipeScreen
 import com.example.recipeapp.ui.screens.FavoritesScreen
 import com.example.recipeapp.ui.screens.HomeScreen
+import com.example.recipeapp.ui.screens.RecipeScreen
 
 @Composable
 fun NavGraph() {
@@ -32,6 +33,9 @@ fun NavGraph() {
             composable("addRecipe") { AddRecipeScreen() }
             composable("account") { AccountScreen() }
             composable("favorites") { FavoritesScreen() }
+            composable("recipe/{recipeName}") { backStackEntry ->
+                val recipeName = backStackEntry.arguments?.getString("recipeName")
+                RecipeScreen(recipeName) }
         }
     }
 }
