@@ -22,10 +22,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.horizontalScroll
+
 @Composable
 fun HomeScreen(navController: NavController) {
 
     var searchText by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf("All") }
 
     Column(
         modifier = Modifier
@@ -116,6 +119,51 @@ fun HomeScreen(navController: NavController) {
 
         }
 
+        Spacer(modifier = Modifier.height(15.dp))
+
+        Text(
+            text = "Categories",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFFF08495)
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState())
+        ) {
+
+            CategoryItem("All", selectedCategory) {
+                selectedCategory = "All"
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            CategoryItem("Breakfast", selectedCategory) {
+                selectedCategory = "Breakfast"
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            CategoryItem("Lunch", selectedCategory) {
+                selectedCategory = "Lunch"
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            CategoryItem("Dinner", selectedCategory) {
+                selectedCategory = "Dinner"
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            CategoryItem("Dessert", selectedCategory) {
+                selectedCategory = "Dessert"
+            }
+
+        }
+
     }
 }
 
@@ -151,4 +199,30 @@ fun FavoriteRecipe(image: Int, name: String,navController: NavController) {
         )
 
     }
+}
+
+@Composable
+fun CategoryItem(name: String, selectedCategory: String, onClick: () -> Unit) {
+
+    val isSelected = name == selectedCategory
+
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(
+                if (isSelected) Color(0xFFF08495) else Color(0xFFFFCAD4)
+            )
+            .clickable { onClick() }
+            .padding(horizontal = 14.dp, vertical = 8.dp)
+    ) {
+
+        Text(
+            text = name,
+            fontSize = 12.sp,
+            color = if (isSelected) Color.White else Color(0xFFF08495),
+            fontWeight = FontWeight.Bold
+        )
+
+    }
+
 }
