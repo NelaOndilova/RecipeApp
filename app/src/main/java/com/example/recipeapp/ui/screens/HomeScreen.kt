@@ -15,20 +15,24 @@ import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
-import androidx.compose.foundation.Image
-import androidx.compose.ui.res.painterResource
-import com.example.recipeapp.R
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.horizontalScroll
+import com.example.recipeapp.ui.components.RecipeCard
+import com.example.recipeapp.data.repository.RecipeRepository
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
     var searchText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("All") }
+
+    val recipes = RecipeRepository.recipes
+    val favoriteRecipes = recipes.filter { it.isFavorite }
+
+    val filteredRecipes = recipes.filter {
+        selectedCategory == "All" || it.category == selectedCategory
+    }
 
     Column(
         modifier = Modifier
@@ -95,23 +99,9 @@ fun HomeScreen(navController: NavController) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
 
-                    FavoriteRecipe(
-                        image = R.drawable.burger,
-                        name = "Homemade burger",
-                        navController = navController
-                    )
-
-                    FavoriteRecipe(
-                        image = R.drawable.ceasersalad,
-                        name = "Caesar salad" ,
-                        navController = navController
-                    )
-
-                    FavoriteRecipe(
-                        image = R.drawable.koreanfriedchicken,
-                        name = "Korean fried chicken",
-                        navController = navController
-                    )
+                    favoriteRecipes.forEach { recipe ->
+                        RecipeCard(recipe, navController)
+                    }
 
                 }
 
@@ -164,40 +154,19 @@ fun HomeScreen(navController: NavController) {
 
         }
 
-    }
-}
+        Spacer(modifier = Modifier.height(20.dp))
 
-@Composable
-fun FavoriteRecipe(image: Int, name: String,navController: NavController) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.width(90.dp)
-    ) {
+            filteredRecipes.forEach { recipe ->
+                RecipeCard(recipe, navController)
 
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(90.dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color.White)
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = name,
-            fontSize = 12.sp,
-            color = Color(0xFFF08495),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.clickable {
-                navController.navigate("recipe/$name")
             }
-        )
 
+        }
     }
 }
 
