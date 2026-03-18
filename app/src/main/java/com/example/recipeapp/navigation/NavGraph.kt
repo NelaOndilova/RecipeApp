@@ -30,7 +30,7 @@ fun NavGraph() {
         ) {
             composable("home") { HomeScreen(navController) }
             composable("favorites") { FavoritesScreen() }
-            composable("addRecipe") { AddRecipeScreen() }
+            composable("addRecipe") { AddRecipeScreen(navController) }
             composable("account") { AccountScreen() }
             composable("favorites") { FavoritesScreen() }
             composable("recipe/{recipeName}") { backStackEntry ->
