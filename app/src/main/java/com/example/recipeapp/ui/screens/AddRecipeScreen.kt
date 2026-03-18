@@ -6,13 +6,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.recipeapp.data.model.Recipe
-import com.example.recipeapp.data.repository.RecipeRepository
-import com.example.recipeapp.R
 
 @Composable
 fun AddRecipeScreen(navController: NavController) {
@@ -22,6 +21,18 @@ fun AddRecipeScreen(navController: NavController) {
     var instructions by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
 
+    val textFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedTextColor = Color(0xFF8F757D),
+        unfocusedTextColor = Color(0xFF8F757D),
+        focusedContainerColor = Color.White,
+        unfocusedContainerColor = Color.White,
+        focusedBorderColor = Color(0xFF8F757D),
+        unfocusedBorderColor = Color(0xFF8F757D),
+        focusedLabelColor = Color(0xFF8F757D),
+        unfocusedLabelColor = Color(0xFF8F757D),
+        cursorColor = Color(0xFF8F757D)
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -30,8 +41,9 @@ fun AddRecipeScreen(navController: NavController) {
     ) {
 
         Text(
-            text = "Add Recipe",
-            fontSize = 20.sp
+            text = "ADD RECIPE",
+            fontSize = 20.sp,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -40,7 +52,9 @@ fun AddRecipeScreen(navController: NavController) {
             value = name,
             onValueChange = { name = it },
             label = { Text("Recipe name") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors,
+            shape = RoundedCornerShape(8.dp)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -49,7 +63,9 @@ fun AddRecipeScreen(navController: NavController) {
             value = category,
             onValueChange = { category = it },
             label = { Text("Category (Breakfast, Lunch, Dinner...)") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors,
+            shape = RoundedCornerShape(8.dp)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -58,7 +74,9 @@ fun AddRecipeScreen(navController: NavController) {
             value = ingredients,
             onValueChange = { ingredients = it },
             label = { Text("Ingredients") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors,
+            shape = RoundedCornerShape(8.dp)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -67,33 +85,29 @@ fun AddRecipeScreen(navController: NavController) {
             value = instructions,
             onValueChange = { instructions = it },
             label = { Text("Instructions") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors,
+            shape = RoundedCornerShape(8.dp)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             onClick = {
-
-                val newRecipe = Recipe(
-                    name = name,
-                    image = R.drawable.burger,
-                    category = category,
-                    ingredients = ingredients,
-                    instructions = instructions,
-                    isFavorite = false
-                )
-
-                RecipeRepository.recipes.add(newRecipe)
-
                 navController.navigate("home")
-
             },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp)
+            modifier = Modifier.fillMaxWidth().height(50.dp),
+            shape = RoundedCornerShape(25.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFFFB4C2),
+                contentColor = Color(0xFF8F757D)
+            )
         ) {
 
-            Text("Add recipe")
+            Text("Add recipe",
+                fontSize = 16.sp,
+                color = Color(0xFFF08495)
+                )
 
         }
 
