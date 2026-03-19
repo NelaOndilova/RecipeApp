@@ -34,8 +34,8 @@ fun NavGraph() {
             composable("account") { AccountScreen() }
             composable("favorites") { FavoritesScreen() }
             composable("recipe/{recipeName}") { backStackEntry ->
-                val recipeName = backStackEntry.arguments?.getString("recipeName")
-                RecipeScreen(recipeName) }
+                val recipeName = backStackEntry.arguments?.getString("recipeName")?: ""
+                RecipeScreen(navController, recipeName) }
         }
     }
 }
