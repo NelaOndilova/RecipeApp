@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -11,7 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import com.example.recipeapp.R
+import com.example.recipeapp.data.model.Recipe
+import com.example.recipeapp.data.repository.RecipeRepository
 
 @Composable
 fun AddRecipeScreen(navController: NavController) {
@@ -20,6 +28,7 @@ fun AddRecipeScreen(navController: NavController) {
     var ingredients by remember { mutableStateOf("") }
     var instructions by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
+    var selectedImage by remember { mutableStateOf(R.drawable.burger) }
 
     val textFieldColors = OutlinedTextFieldDefaults.colors(
         focusedTextColor = Color(0xFF8F757D),
@@ -92,24 +101,89 @@ fun AddRecipeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        Text(
+            text = "Choose image",
+            fontSize = 16.sp,
+            color = Color(0xFF8F757D)
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            Image(
+                painter = painterResource(id = R.drawable.burger),
+                contentDescription = "Burger",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(90.dp)
+                    .background(
+                        color = if (selectedImage == R.drawable.burger) Color(0xFFFFD6DE) else Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .clickable { selectedImage = R.drawable.burger }
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.ceasersalad),
+                contentDescription = "Salad",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(90.dp)
+                    .background(
+                        color = if (selectedImage == R.drawable.ceasersalad) Color(0xFFFFD6DE) else Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .clickable { selectedImage = R.drawable.ceasersalad }
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.koreanfriedchicken),
+                contentDescription = "Chicken",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(90.dp)
+                    .background(
+                        color = if (selectedImage == R.drawable.koreanfriedchicken) Color(0xFFFFD6DE) else Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .clickable { selectedImage = R.drawable.koreanfriedchicken }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         Button(
             onClick = {
+                val newRecipe = Recipe(
+                    name = name,
+                    image = selectedImage,
+                    category = category,
+                    ingredients = ingredients,
+                    instructions = instructions,
+                    isFavorite = false
+                )
+
+                RecipeRepository.recipes.add(newRecipe)
                 navController.navigate("home")
             },
-            modifier = Modifier.fillMaxWidth().height(50.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
             shape = RoundedCornerShape(25.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFFFFB4C2),
                 contentColor = Color(0xFF8F757D)
             )
         ) {
-
-            Text("Add recipe",
+            Text(
+                text = "Add recipe",
                 fontSize = 16.sp,
                 color = Color(0xFFF08495)
-                )
-
+            )
         }
-
     }
 }
