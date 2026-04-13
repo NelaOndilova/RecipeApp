@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
@@ -38,43 +39,69 @@ fun RecipeScreen(recipeName: String) {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(220.dp)
+                .clip(RoundedCornerShape(20.dp))
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = recipe.name,
-            fontSize = 22.sp
+            fontSize = 22.sp,
+            color = Color(0xFF8F757D)
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Text("Category: ${recipe.category}")
+        Text(
+            text = "Category:",
+            color = Color(0xFF8F757D)
+        )
+        Text(
+            text = recipe.category,
+            color = Color(0xFF8F757D)
+        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Text("Ingredients:")
-        Text(recipe.ingredients)
+        Text(
+            "Ingredients:",
+            color = Color(0xFF8F757D)
+        )
+
+        Text(
+            recipe.ingredients,
+            color = Color(0xFF8F757D)
+        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Text("Instructions:")
-        Text(recipe.instructions)
+        Text(
+            "Instructions:",
+            color = Color(0xFF8F757D)
+        )
+
+        Text(
+            recipe.instructions,
+            color = Color(0xFF8F757D)
+        )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             onClick = {
-                recipe.isFavorite = true
+                val index = RecipeRepository.recipes.indexOf(recipe)
+                if (index != -1) {
+                    RecipeRepository.recipes[index] =
+                        recipe.copy(isFavorite = true)
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
             shape = RoundedCornerShape(25.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFFFB4C2),
-                contentColor = Color(0xFF8F757D)
+                containerColor = Color(0xFFFFB4C2)
             )
         ) {
             Text(
