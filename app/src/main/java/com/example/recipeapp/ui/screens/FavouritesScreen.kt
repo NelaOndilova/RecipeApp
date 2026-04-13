@@ -24,9 +24,7 @@ import androidx.compose.foundation.lazy.grid.items
 fun FavoritesScreen(navController: NavController) {
 
     var searchText by remember { mutableStateOf("") }
-
     val favoriteRecipes = RecipeRepository.recipes.filter { it.isFavorite }
-
     val filteredRecipes = favoriteRecipes.filter {
         it.name.contains(searchText, ignoreCase = true)
     }
