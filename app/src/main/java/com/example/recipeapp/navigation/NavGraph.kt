@@ -29,13 +29,12 @@ fun NavGraph() {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable("home") { HomeScreen(navController) }
-            composable("favorites") { FavoritesScreen() }
+            composable("favorites") { FavoritesScreen(navController) }
             composable("addRecipe") { AddRecipeScreen(navController) }
             composable("account") { AccountScreen() }
-            composable("favorites") { FavoritesScreen() }
             composable("recipe/{recipeName}") { backStackEntry ->
                 val recipeName = backStackEntry.arguments?.getString("recipeName")?: ""
-                RecipeScreen(navController, recipeName) }
+                RecipeScreen(recipeName) }
         }
     }
 }
