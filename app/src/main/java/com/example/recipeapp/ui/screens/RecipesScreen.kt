@@ -9,22 +9,32 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.recipeapp.data.repository.RecipeRepository
+import com.example.recipeapp.data.model.Recipe
+import kotlinx.coroutines.launch
 
 @Composable
-fun RecipeScreen(recipeName: String) {
+fun RecipeScreen(recipeName: String, recipeRepository: RecipeRepository) {
 
-    val recipe = RecipeRepository.recipes.find { it.name == recipeName }
+    var recipe by remember { mutableStateOf<Recipe?>(null) }
+
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) { recipe = recipeRepository.getAllRecipes().find {it.name == recipeName} }
 
     if (recipe == null) {
         Text("Recipe not found")
         return
     }
+
+    val currentRecipe = recipe!!
 
     Column(
         modifier = Modifier
@@ -34,8 +44,8 @@ fun RecipeScreen(recipeName: String) {
     ) {
 
         Image(
-            painter = painterResource(id = recipe.image),
-            contentDescription = recipe.name,
+            painter = painterResource(id = currentRecipe.image),
+            contentDescription = currentRecipe.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
@@ -46,7 +56,7 @@ fun RecipeScreen(recipeName: String) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = recipe.name,
+            text = currentRecipe.name,
             fontSize = 22.sp,
             color = Color(0xFF8F757D)
         )
@@ -58,7 +68,7 @@ fun RecipeScreen(recipeName: String) {
             color = Color(0xFF8F757D)
         )
         Text(
-            text = recipe.category,
+            text = currentRecipe.category,
             color = Color(0xFF8F757D)
         )
 
@@ -70,7 +80,7 @@ fun RecipeScreen(recipeName: String) {
         )
 
         Text(
-            recipe.ingredients,
+            currentRecipe.ingredients,
             color = Color(0xFF8F757D)
         )
 
@@ -82,7 +92,7 @@ fun RecipeScreen(recipeName: String) {
         )
 
         Text(
-            recipe.instructions,
+            currentRecipe.instructions,
             color = Color(0xFF8F757D)
         )
 
@@ -90,10 +100,9 @@ fun RecipeScreen(recipeName: String) {
 
         Button(
             onClick = {
-                val index = RecipeRepository.recipes.indexOf(recipe)
-                if (index != -1) {
-                    RecipeRepository.recipes[index] =
-                        recipe.copy(isFavorite = true)
+                scope.launch {
+                val updateRecipe = currentRecipe.copy(isFavorite = true)
+                    recipeRepository.updateRecipe(updateRecipe)
                 }
             },
             modifier = Modifier

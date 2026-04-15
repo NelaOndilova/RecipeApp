@@ -20,9 +20,11 @@ import androidx.navigation.NavController
 import com.example.recipeapp.R
 import com.example.recipeapp.data.model.Recipe
 import com.example.recipeapp.data.repository.RecipeRepository
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
-fun AddRecipeScreen(navController: NavController) {
+fun AddRecipeScreen(navController: NavController, recipeRepository: RecipeRepository) {
 
     var name by remember { mutableStateOf("") }
     var ingredients by remember { mutableStateOf("") }
@@ -30,6 +32,7 @@ fun AddRecipeScreen(navController: NavController) {
     var category by remember { mutableStateOf("") }
     var selectedImage by remember { mutableStateOf(R.drawable.burger) }
 
+    val scope = rememberCoroutineScope()
     val textFieldColors = OutlinedTextFieldDefaults.colors(
         focusedTextColor = Color(0xFF8F757D),
         unfocusedTextColor = Color(0xFF8F757D),
@@ -157,19 +160,19 @@ fun AddRecipeScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = {
+            onClick = { scope.launch {
                 val newRecipe = Recipe(
-                    name = name,
-                    image = selectedImage,
-                    category = category,
-                    ingredients = ingredients,
-                    instructions = instructions,
-                    isFavorite = false
-                )
+                name = name,
+                image = selectedImage,
+                category = category,
+                ingredients = ingredients,
+                instructions = instructions,
+                isFavorite = false
+            )
 
-                RecipeRepository.recipes.add(newRecipe)
-                navController.navigate("home")
-            },
+                recipeRepository.insertRecipe(newRecipe)
+                navController.navigate("home")  }
+                      },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),

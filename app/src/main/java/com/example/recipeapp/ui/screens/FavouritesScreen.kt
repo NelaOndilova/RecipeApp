@@ -19,15 +19,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import com.example.recipeapp.data.model.Recipe
 
 @Composable
-fun FavoritesScreen(navController: NavController) {
+fun FavoritesScreen(navController: NavController, recipeRepository: RecipeRepository) {
 
     var searchText by remember { mutableStateOf("") }
-    val favoriteRecipes = RecipeRepository.recipes.filter { it.isFavorite }
+    var favoriteRecipes by remember { mutableStateOf<List<Recipe>>(emptyList())}
+
+    LaunchedEffect(Unit){ favoriteRecipes = recipeRepository.getFavoriteRecipes()}
+
     val filteredRecipes = favoriteRecipes.filter {
         it.name.contains(searchText, ignoreCase = true)
     }
+
 
     Column(
         modifier = Modifier

@@ -20,18 +20,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.horizontalScroll
 import com.example.recipeapp.ui.components.RecipeCard
 import com.example.recipeapp.data.repository.RecipeRepository
+import com.example.recipeapp.data.model.Recipe
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, recipeRepository: RecipeRepository) {
 
     var searchText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("All") }
+    var recipes by remember { mutableStateOf<List<Recipe>>(emptyList()) }
 
-    val recipes = RecipeRepository.recipes
+    LaunchedEffect(Unit){ recipes = recipeRepository.getAllRecipes()}
+
     val favoriteRecipes = recipes.filter { it.isFavorite }
-
     val filteredRecipes = recipes.filter {
-        selectedCategory == "All" || it.category == selectedCategory
+        (selectedCategory == "All" || it.category == selectedCategory) &&
+                it.name.contains(searchText, ignoreCase = true)
     }
 
     Column(

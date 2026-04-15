@@ -11,9 +11,10 @@ import com.example.recipeapp.ui.screens.AddRecipeScreen
 import com.example.recipeapp.ui.screens.FavoritesScreen
 import com.example.recipeapp.ui.screens.HomeScreen
 import com.example.recipeapp.ui.screens.RecipeScreen
+import com.example.recipeapp.data.repository.RecipeRepository
 
 @Composable
-fun NavGraph() {
+fun NavGraph(recipeRepository: RecipeRepository) {
 
     val navController = rememberNavController()
 
@@ -28,13 +29,13 @@ fun NavGraph() {
             startDestination = "home",
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable("home") { HomeScreen(navController) }
-            composable("favorites") { FavoritesScreen(navController) }
-            composable("addRecipe") { AddRecipeScreen(navController) }
-            composable("account") { AccountScreen() }
+            composable("home") { HomeScreen(navController, recipeRepository) }
+            composable("favorites") { FavoritesScreen(navController, recipeRepository) }
+            composable("addRecipe") { AddRecipeScreen(navController, recipeRepository) }
+            composable("account") { AccountScreen(navController, recipeRepository) }
             composable("recipe/{recipeName}") { backStackEntry ->
                 val recipeName = backStackEntry.arguments?.getString("recipeName")?: ""
-                RecipeScreen(recipeName) }
+                RecipeScreen(recipeName, recipeRepository) }
         }
     }
 }
