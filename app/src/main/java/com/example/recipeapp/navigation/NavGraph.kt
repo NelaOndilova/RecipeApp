@@ -32,7 +32,7 @@ fun NavGraph(recipeRepository: RecipeRepository) {
             composable("home") { HomeScreen(navController, recipeRepository) }
             composable("favorites") { FavoritesScreen(navController, recipeRepository) }
             composable("addRecipe") { AddRecipeScreen(navController, recipeRepository) }
-            composable("account") { AccountScreen(navController, recipeRepository) }
+            composable("account") { AccountScreen(navController) }
             composable("recipe/{recipeName}") { backStackEntry ->
                 val recipeName = backStackEntry.arguments?.getString("recipeName")?: ""
                 RecipeScreen(recipeName, recipeRepository) }

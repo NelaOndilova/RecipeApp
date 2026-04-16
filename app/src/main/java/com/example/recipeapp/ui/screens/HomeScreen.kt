@@ -29,7 +29,7 @@ fun HomeScreen(navController: NavController, recipeRepository: RecipeRepository)
     var selectedCategory by remember { mutableStateOf("All") }
     var recipes by remember { mutableStateOf<List<Recipe>>(emptyList()) }
 
-    LaunchedEffect(Unit){ recipes = recipeRepository.getAllRecipes()}
+    LaunchedEffect(true){ recipes = recipeRepository.getAllRecipes()}
 
     val favoriteRecipes = recipes.filter { it.isFavorite }
     val filteredRecipes = recipes.filter {

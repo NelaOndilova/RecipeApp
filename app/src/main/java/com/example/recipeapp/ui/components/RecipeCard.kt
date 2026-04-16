@@ -29,7 +29,8 @@ fun RecipeCard(recipe: Recipe, navController: NavController) {
                 navController.navigate("recipe/${recipe.name}")
             }
     ) {
-        Image(
+        Box {
+            Image(
             painter = painterResource(id = recipe.image),
             contentDescription = recipe.name,
             contentScale = ContentScale.Crop,
@@ -38,6 +39,13 @@ fun RecipeCard(recipe: Recipe, navController: NavController) {
                 .clip(RoundedCornerShape(20.dp))
                 .background(Color.White)
         )
+            FavoriteButton(
+                isFavorite = recipe.isFavorite,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(6.dp)
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
