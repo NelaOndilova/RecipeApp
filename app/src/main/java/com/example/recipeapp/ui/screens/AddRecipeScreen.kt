@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -44,6 +45,7 @@ fun AddRecipeScreen(navController: NavController, recipeRepository: RecipeReposi
         unfocusedLabelColor = Color(0xFF8F757D),
         cursorColor = Color(0xFF8F757D)
     )
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
@@ -113,7 +115,9 @@ fun AddRecipeScreen(navController: NavController, recipeRepository: RecipeReposi
         Spacer(modifier = Modifier.height(12.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+            .horizontalScroll(scrollState)
+            .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
@@ -154,6 +158,45 @@ fun AddRecipeScreen(navController: NavController, recipeRepository: RecipeReposi
                         shape = RoundedCornerShape(16.dp)
                     )
                     .clickable { selectedImage = R.drawable.koreanfriedchicken }
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.carbonara),
+                contentDescription = "Carbonara",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(90.dp)
+                    .background(
+                        color = if (selectedImage == R.drawable.carbonara) Color(0xFFFFD6DE) else Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .clickable { selectedImage = R.drawable.carbonara }
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.nutellacreperolls),
+                contentDescription = "Crepes",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(90.dp)
+                    .background(
+                        color = if (selectedImage == R.drawable.carbonara) Color(0xFFFFD6DE) else Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .clickable { selectedImage = R.drawable.nutellacreperolls }
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.pumpkinsoup),
+                contentDescription = "Soup",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(90.dp)
+                    .background(
+                        color = if (selectedImage == R.drawable.carbonara) Color(0xFFFFD6DE) else Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .clickable { selectedImage = R.drawable.pumpkinsoup }
             )
         }
 
