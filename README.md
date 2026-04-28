@@ -6,7 +6,8 @@ Co aplikace umí:
 - vyhledávat podle názvu  
 - filtrovat podle kategorií  
 - přidávat nové recepty  
-- označit recept jako oblíbený ❤️  
+- označit recept jako oblíbený ❤️
+  
 Použité technologie:
 - Kotlin  
 - Android Studio  
