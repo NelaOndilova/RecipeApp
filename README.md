@@ -15,13 +15,23 @@ Použité technologie:
 - Room Database  
 
 Spuštění aplikace
+
 Projekt se otevírá v Android Studiu.
+
 1.Naklonování repozitáře
+
 V Android Studiu zvolit File → New → Project from Version Control a vložit URL repozitáře (nebo se může stáhnout přes Code → Download ZIP).
+
 2.Otevření projektu
+
 Po naklonování (nebo rozbalení ZIPu) projekt otevřít v Android Studiu.
+
 3.Počkání na načtení
+
 Nechat doběhnout Gradle sync, aby se stáhly všechny knihovny.
+
 4.Spustění aplikace
+
 Emulátor: vybrat virtuální zařízení a kliknutí na ▶️ (Play)
+
 Mobil: připojění telefonu kabelem nebo naskenování QR kódu, zapnutí „Ladění přes USB“ nebo "Bezdrátové ladění" a spuštění ▶️
